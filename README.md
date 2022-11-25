@@ -19,4 +19,4 @@ Once all of the required files have been saved, download and upload them (I sugg
 
             dosnap(snap) # Change snap to get the required snapshot number
 
-A new Jupyter notebook containing examples of the above code will be uploaded soon. 
+Edit: A new .ipynb notebook has been uploaded to demonstrate how the new data_ext.py code works.
