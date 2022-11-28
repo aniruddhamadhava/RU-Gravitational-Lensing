@@ -16,7 +16,7 @@ Then, to extract data using this file, use the following code:
             d.data_reducer1()
             d.hist()
 
-Once all of the required files have been saved (mass densities for dark matter, gas, stars, and the centers for each snapshot), download and upload them (I suggest use Jupyter Notebook for this). Then, we can use the file, conv_comp.py. First, make sure the file: pygravlens.py (credit: Prof. Charles Keeton) is downloaded. Next, run the following code in a Jupyter notebook:
+Note that the amount of time it takes the data to load may vary substantially from the examples based on the server speed. I have recorded a maximum time of close to 20 minutes and a minimum time of 30 seconds. Once all of the required files have been saved (mass densities for dark matter, gas, stars, and the centers for each snapshot), download and upload them (I suggest use Jupyter Notebook for this). Then, we can use the file, conv_comp.py. First, make sure the file: pygravlens.py (credit: Prof. Charles Keeton) is downloaded. Next, run the following code in a Jupyter notebook:
 
             import conv_comp as cc
             
