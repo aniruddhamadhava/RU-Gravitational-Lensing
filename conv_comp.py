@@ -15,6 +15,10 @@ import Pygravlens as g
 
 class m_to_conv:
     def __init__(self, snap):
+        """
+        snap: snapshot number array
+        reds: array of redshifts (specific to IllustrisTNG 100-3 simulation)
+        """
         self.snap = snap
         self.reds = [1.00, 0.95, 0.92, 0.89, 0.85, 0.82, 0.79, 0.76, 0.73, 0.70, 0.68, 0.64, 0.62, 0.60, 0.58, 0.55, 0.52, 0.50, 0.48, 0.46, 0.44, 0.42, 0.40, 0.38, 0.36, 0.35, 0.33, 0.31, 0.30, 0.27, 0.26, 0.24, 0.23, 0.21, 0.20, 0.18, 0.17,0.15, 0.14, 0.13, 0.11, 0.10, 0.08, 0.07, 0.06, 0.05, 0.03, 0.02, 0.01, 0.0]
         sr = {}
@@ -22,6 +26,11 @@ class m_to_conv:
             sr[i] = self.reds[i - 50]
         self.sr = sr
     def mtok(density_map, zlens, zsrc = 2.0):
+        """
+        User inputs mass density map (for dark matter, gas, or stars), the redshift of the lens, and the redshift of the source. 
+        The default setting on the source redshift is 2.0. dL is the distance to the lens, dS is the distance to the source, dLS is the
+        distance between the source and the lens. crit is the critical mass density for the lens. 
+        """
         dL = cosmo.angular_diameter_distance(zlens)
         dS = cosmo.angular_diameter_distance(zsrc)
         dLS = cosmo.angular_diameter_distance_z1z2(zlens,zsrc)
@@ -33,8 +42,14 @@ class m_to_conv:
         print(f'Critical density: {crit:.2e}')
 
         kappa = density_map/crit.value
-        return kappa
+        Crit = crit.value
+        return kappa, Crit
     def dosnap2(self):
+        """
+        Performs the lensing calculations (calculates and saves the density, deflection angle, single- and second-order (including mixed)
+        derivatives of the lensing potential, and kappa maps. This version also saves additional information about the angular scale of the 
+        snapshot along with the redshift, critical density, and pixel scale in a dictionary for use with pygravlens multi-plane lensing modelling.
+        """
         dens_maps = {}
         def_maps = {}
         phix_maps = {}
@@ -44,10 +59,20 @@ class m_to_conv:
         phixx_maps = {}
         phiyy_maps = {}
         kappa_maps = {}
+        data = {}
+        ang_scale_per_ckpc = {}
+        ang_scale_per_arcsec = {}
+        redshift = {} 
+        critical_density = {}
+        PixSc = {}
 
         for i in range(len(self.snap)):
             angle_per_ckpc = cosmo.arcsec_per_kpc_comoving(self.sr[self.snap[i]]).value
             print(f'Snapshot {self.snap[i]}, z = {self.sr[self.snap[i]]}, angular scale = {angle_per_ckpc:.3f} arcsec/ckpc or {1/angle_per_ckpc:.2f} ckpc/arcsec')
+            Redshift = self.sr[self.snap[i]]
+            ang_scale_per_arcsec[self.snap[i]] = 1/angle_per_ckpc
+            ang_scale_per_ckpc[self.snap[i]] = angle_per_ckpc
+            redshift[self.snap[i]] = Redshift
 
 
             # box size, in arcsec
@@ -76,7 +101,7 @@ class m_to_conv:
             # x and y arrays (1d)
 
             # calculate the kappa map
-            kappa_comb = m_to_conv.mtok(comb_dens_map, self.sr[self.snap[i]])
+            kappa_comb, crit = m_to_conv.mtok(comb_dens_map, self.sr[self.snap[i]])
             # difference relative to mean
             kappa_mean = np.mean(kappa_comb)
             dkappa = kappa_comb - kappa_mean
@@ -96,8 +121,10 @@ class m_to_conv:
             phiyy_maps[self.snap[i]] = phiyy
             phixx_maps[self.snap[i]] = phixx
             kappa_maps[self.snap[i]] = dkappa
-
-
+            critical_density[self.snap[i]] = crit
+            PixSc[self.snap[i]] = pixel_scale
+        
+        data = {"Angular Scale (asec/ckpc)": ang_scale_per_ckpc, "Angular Scale (ckpc/asec)": ang_scale_per_arcsec, "Redshift": redshift, "Critical Density (solMass/asec^2)": critical_density, "Pixel Scale": PixSc}
         if np.size(self.snap) > 1:
             np.save(f'dens_maps_dictionary.npy', dens_maps)
             np.save(f'def_maps_dictionary.npy', def_maps)
@@ -108,6 +135,7 @@ class m_to_conv:
             np.save(f'kappa_maps_dictionary.npy', kappa_maps)
             np.save(f'phiyy_maps_dictionary.npy', phiyy_maps)
             np.save(f'phixx_maps_dictionary.npy', phixx_maps)
+            np.save(f'data_dictionary.npy', data)
         else:
             np.save(f'dens_maps_dictionary_{self.snap}.npy', dens_maps)
             np.save(f'def_maps_dictionary_{self.snap}.npy', def_maps)
@@ -118,10 +146,4 @@ class m_to_conv:
             np.save(f'kappa_maps_dictionary_{self.snap}.npy', kappa_maps)
             np.save(f'phiyy_maps_dictionary_{self.snap}.npy', phiyy_maps)
             np.save(f'phixx_maps_dictionary_{self.snap}.npy', phixx_maps)
-
-
-# In[ ]:
-
-
-
-
+            np.save(f'data_dictionary_{self.snap}.npy', data)
