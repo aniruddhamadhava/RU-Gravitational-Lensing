@@ -30,6 +30,9 @@ Note that the amount of time it takes the data to load may vary substantially fr
 
 Note that the input, snap, is an array of snapshot numbers. E.g., if we just want to calculate the lensing maps for snapshot 52, the proper input is snap = [52]. If, however, we wanted to calculate the lensing maps for snapshots x, ..., y, we need to use snap = np.arange(x, y + 1, 1).
 
+The following link is a link to an (ongoing) summary of the research methodologies used so far: 
+https://www.overleaf.com/read/qcwdxgsgmncs
+
 Credits:
 
 * Professor Keeton: https://github.com/chuckkeeton/pygravlens
