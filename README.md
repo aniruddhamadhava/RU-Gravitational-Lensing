@@ -1,6 +1,6 @@
-# Fall-2022-Research
+# Fall-2022/Spring-2023-Research
 
-This repository contains the files/code necessary for the analysis done in the Fall 2022 research. The following packages/codes are required:
+This repository contains the files/code necessary for the analysis done in the Fall 2022/Spring 2023 research. The following packages/codes are required:
 
 * numpy
 * scipy
