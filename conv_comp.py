@@ -34,8 +34,8 @@ class m_to_conv:
         dL = cosmo.angular_diameter_distance(zlens)
         dS = cosmo.angular_diameter_distance(zsrc)
         dLS = cosmo.angular_diameter_distance_z1z2(zlens,zsrc)
-        #compute critical density and convert to Msun per kpc^2
-        crit = ((c)**2 /(4*np.pi*G) *dS/(dL*dLS)).to(u.Msun/(u.kpc)**2)
+        #compute critical density and convert to Msun per kpc^2; dS/DLS has been set equal to 1 to account for source redshift
+        crit = ((c)**2 /(4*np.pi*G) *1/(dL)).to(u.Msun/(u.kpc)**2)
         #and convert to Msun per arcsec^2
         dist = dL.to(u.kiloparsec)
         crit = (crit * dist**2 /u.rad**2).to(u.Msun/u.arcsec**2)
