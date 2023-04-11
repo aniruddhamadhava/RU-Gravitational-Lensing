@@ -1,10 +1,14 @@
 # Fall-2022/Spring-2023-Research
 
-This repository contains the files/code necessary for the analysis done in the Fall 2022/Spring 2023 research. The following packages/codes are required:
+This repository contains the files/code necessary for the analysis done in the Fall 2022/Spring 2023 research. The following packages/codes are required (packages necessary only for data extraction are marked by "DE"):
 
 * numpy
 * scipy
 * pygravlens
+* shapely
+* illustris_python (DE)
+* astropy
+* scipy
 
 Abstract: 
 
