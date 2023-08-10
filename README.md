@@ -48,6 +48,25 @@ Note that the amount of time it takes the data to load may vary substantially fr
 
 Note that the input, snap, is an array of snapshot numbers. E.g., if we just want to calculate the lensing maps for snapshot 52, the proper input is snap = [52]. If, however, we wanted to calculate the lensing maps for snapshots x, ..., y, we need to use snap = np.arange(x, y + 1, 1).
 
+To compute deflection statistics for a cluster, we use the clensmod package. This file contains two classes: (i) lens, and (ii) clusterclass. The first class sets up the multiplane lensmodel containing all snapshots. The next class computes deflection statistics for a galaxy cluster. To set up the lensmodel, use the following code: 
+
+            import clensmod as cl
+            
+            lensmodel = cl.lens(data_dictionary_file, kappa_file_directory, box_size)
+            model, mybox = lensmodel.lensmodel(start_snap, end_snap, fov)
+
+data_dictionary_file indicates the location where the data_dictionary (output from conv_comp) is stored. kappa_file_directory is the directory to where the kappa files (output from conv_comp) is stored. box_size is the simulation box size, expressed in Mpc/h. start_snap is the starting snapshot number, and end_snap is the ending snapshot number. fov is the field-of-view in degrees. If we want the code to also output the deflection array and kappa arrays, we pass an additional argument, "output = True". The default output is the multiplane lensmodel, and lensmodel box. Once we run these code, we can compute deflection statistics for a cluster as follows:
+
+            cluster = cl.clusterclass(cluster_image_file, z_clus, clusname)
+            info = cluster.DefStats(model,Nsamp= 10000, box = mybox)
+            cluster.plot_DefStats()
+
+The cluster_image_file is the .txt file containing image positions, z_clus is the cluster redshift, and clusname is the name of the cluster (e.g., A2744, M0416). info is a dictionary containing the covariance matrices:
+
+            info = {'LOS': [defavg_los, defcov_los], 'FG': [defavg_fg, defcov_fg], 'LOSFG': [defcov_los_fg]}
+
+cluster.plot_DefStats() plots the actual deflection statistics. On average, computing deflection statistics for each cluster takes ~ 30-40 minutes for 10,000 samples. 
+
 The following site links to an (ongoing) summary of the research methodologies used: 
 https://www.overleaf.com/read/qcwdxgsgmncs
 
