@@ -199,7 +199,7 @@ class clusterclass:
         print('los: $\langle \mu \\rangle = {:.3e}$ ; $\langle \sigma \\rangle = {:.3e}$ ; RMS = {:.3e}'.format(np.mean(self.defavg_los), np.mean(self.defsig_los), self.rms_los))
         print('fg:  $\langle \mu \\rangle$ = {:.3e}  $\langle \sigma \\rangle$ = {:.3e}'.format(np.mean(self.defavg_fg ),np.mean(self.defsig_fg)))
         
-        info = {'LOS': [self.defavg_los, self.defcov_los], 'FG': [self.defavg_fg, self.defcov_fg], 'LOSFG': [self.defcov_los_fg]}
+        info = {'kapgam': [self.kapgam], 'LOS': [self.defavg_los, self.defcov_los], 'FG': [self.defavg_fg, self.defcov_fg], 'LOSFG': [self.defcov_los_fg]}
         return info 
 
     ############################################################
