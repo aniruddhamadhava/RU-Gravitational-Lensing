@@ -1,5 +1,5 @@
 # RU Gravitational Lensing (2022 - 2025)
-This repository contains the files/code necessary for the analysis done in the Fall 2022/Spring 2023 research. The following packages/codes are required (packages necessary only for data extraction are marked by "DE"):
+This repository contains the files/code necessary for the analysis done in the gravitational lensing (2022-25) research. The following packages/codes are required (packages necessary only for data extraction are marked by "DE"):
 
 * numpy
 * scipy
@@ -11,16 +11,9 @@ This repository contains the files/code necessary for the analysis done in the F
 
 Abstract: 
 
-Current lensing models assume a uniform density along a line-of-sight except at a mass distribution (i.e.,
-lens). The implication is that light rays will only deflect near such distributions, traveling in a straight line
-everywhere else. However, large-scale cosmological structures create density fluctuations, which can produce
-additional lensing effects. Our project seeks to quantify these effects. In particular, we want to compute
-the variance in deflection angles for nearby line-of-sights. This information will tell us the degree to which
-current lens models are accurate and whether additional parameters are needed for the lens equation. For
-this analysis, we use the TNG 100-3 simulation and pygravlens.
+Gravitational lensing has become a powerful astrophysical tool, acting as cosmic telescopes to the high-redshift universe. In particular, with masses of $\sim 10^{14} - 10^{15} \hspace{2pt} M_{\odot}$, galaxy clusters offer some of the strongest lenses of high-redshift galaxies. Before these images can be reconstructed to study the source, it is important to model the cluster lens. Previous work have considered different parameters for this lens modeling process, but have not included effects of large-scale cosmological structures (LSS). This work specifically considers the effects of LSS density fluctuations on differential deflection fields on cluster lens modeling. 
 
-
-Keywords: Gravitational Lensing Models, Large-Scale Structures, Deflection Angles, TNG 100-3 Simulations, pygravlens
+Keywords: Gravitational Lensing Models, Large-Scale Structures, Deflection Angles, $\texttt{pygravlens}$
 
 Files:
 
@@ -63,7 +56,7 @@ data_dictionary_file indicates the location where the data_dictionary (output fr
 
 The cluster_image_file is the .txt file containing image positions, z_clus is the cluster redshift, and clusname is the name of the cluster (e.g., A2744, M0416). info is a dictionary containing the covariance matrices:
 
-            info = {'LOS': [defavg_los, defcov_los], 'FG': [defavg_fg, defcov_fg], 'LOSFG': [defcov_los_fg]}
+            info = {'kapgam': [kapgam], 'LOS': [defavg_los, defcov_los], 'FG': [defavg_fg, defcov_fg], 'LOSFG': [defcov_los_fg]}
 
 cluster.plot_DefStats() plots the actual deflection statistics. On average, computing deflection statistics for each cluster takes ~ 30-40 minutes for 10,000 samples. 
 
