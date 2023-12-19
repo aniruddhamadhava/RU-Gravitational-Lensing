@@ -1,4 +1,4 @@
-# RU Gravitational Lensing (2022 - 2025)
+# RU Gravitational Lensing (2022 - 2025) <meta name="google-site-verification" content="TToTm0GK0IZcS29PpXFMUeOcnDn2BqbUzP8IYywRRds" />
 This repository contains the files/code necessary for the analysis done in the gravitational lensing (2022-25) research. The following packages/codes are required (packages necessary only for data extraction are marked by "DE"):
 
 * numpy
